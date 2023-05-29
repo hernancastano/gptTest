@@ -1,6 +1,6 @@
 package gptTest.Dto;
 
-public class Usage {
+public class UsageDTO {
     private int prompt_tokens;
     private int total_tokens;
 

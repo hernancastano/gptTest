@@ -1,8 +1,8 @@
 package gptTest.Controller;
 
-import gptTest.Dto.EmbeddingdResponse;
-import gptTest.Dto.Embeddings;
-import gptTest.Service.EmbeddingService;
+import gptTest.Dto.EmbeddingsDTO;
+import gptTest.Dto.ResponseDTO;
+import gptTest.Interfaz.EmbeddingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,14 +17,7 @@ public class EmbeddingsController {
     EmbeddingService embeddingService;
 
     @PostMapping(value = "/embeddings", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String generateEmbeddings(@RequestBody Embeddings embeddings) {
-        EmbeddingdResponse imputEmbeddingdResponse = embeddingService.callGptEmbeddingsApi(embeddings.getToStringWithInput());
-        EmbeddingdResponse searchEmbeddingdResponse = embeddingService.callGptEmbeddingsApi(embeddings.getToStringWithSearch());
-        assert searchEmbeddingdResponse != null;
-        double[] searchConvertListDoubletoArrayDouble = embeddingService.convertListDoubletoArrayDouble(searchEmbeddingdResponse.getData().get(0).getEmbedding());
-        assert imputEmbeddingdResponse != null;
-        double[] imputConvertListDoubletoArrayDouble = embeddingService.convertListDoubletoArrayDouble(imputEmbeddingdResponse.getData().get(0).getEmbedding());
-        double responseCalculateCosineSimilatiry = embeddingService.calculateCosineSimilatiry(searchConvertListDoubletoArrayDouble, imputConvertListDoubletoArrayDouble);
-        return String.valueOf(responseCalculateCosineSimilatiry);
+    public ResponseDTO generateEmbeddings(@RequestBody EmbeddingsDTO embeddings) {
+      return new ResponseDTO(200, "Proceso exitoso", embeddingService.initService(embeddings));
     }
 }

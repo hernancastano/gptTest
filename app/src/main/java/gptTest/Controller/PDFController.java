@@ -1,6 +1,6 @@
 package gptTest.Controller;
 
-import gptTest.Service.PDFService;
+import gptTest.Interfaz.PDFService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,12 +18,6 @@ public class PDFController {
 
     @PostMapping("/pdf/separate-paragraph")
     public ResponseEntity<List<String>> separateParagraphsFromAPdf(@RequestBody String filePath) {
-        try {
-            List<String> paragraphs = pdfService.separateParagraphsFromAPdf(filePath);
-            return ResponseEntity.ok(paragraphs);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).build();
-        }
+          return ResponseEntity.ok(pdfService.separateParagraphsFromAPdf(filePath));
     }
 }

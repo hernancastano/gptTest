@@ -2,7 +2,7 @@ package gptTest.Dto;
 
 import java.util.List;
 
-public class EmbeddingData {
+public class EmbeddingDataDTO {
     private String object;
     private int index;
     private List<Double> embedding;
